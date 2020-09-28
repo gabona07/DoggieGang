@@ -7,4 +7,11 @@
     <string name="dark_mode">Enable Dark Mode</string>
     <string name="light_mode">Enable light mode</string>
     <string name="set_mode">Set mode</string>
+    <string name="dogName">Dog\'s name</string>
+    <string name="ownerName">Owner\'s name</string>
+    <string name="introduction">Introduction</string>
+    <string name="location">Location</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="email">E-mail</string>
 </resources>

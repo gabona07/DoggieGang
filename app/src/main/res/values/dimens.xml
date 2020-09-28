@@ -4,4 +4,6 @@
     <dimen name="progressbar_height">20dp</dimen>
     <dimen name="loading_text_margin">10dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="registration_padding">16dp</dimen>
+    <dimen name="registration_field_margin">10dp</dimen>
 </resources>

@@ -7,28 +7,48 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:background="@color/backgroundAccent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/main"
-        app:title="@string/app_name" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="@color/background"
+            app:menu="@menu/main"
+            app:title="@string/page_title"
+            app:titleTextColor="@color/mainText" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loading_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/loading_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to registration"
+        android:onClick="goToRegistration"
+        app:layout_constraintBottom_toTopOf="@+id/loading_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/loading_text"
@@ -41,6 +61,8 @@
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
     <ProgressBar
         android:id="@+id/progressBar"

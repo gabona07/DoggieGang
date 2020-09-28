@@ -2,13 +2,13 @@ package com.codecool.doggiegang
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.topbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,59 +26,48 @@ class MainActivity : AppCompatActivity() {
         // ProgressBar
         initializeProgress()
 
-        // Toolbar
-        setSupportActionBar(toolbar)
-
         // Initialise SharedPrefs for theme
         appSettingsPref = getSharedPreferences("AppSettingPrefs", Context.MODE_PRIVATE)
         sharedPrefsEdit  = appSettingsPref!!.edit()
         isNightModeOn = appSettingsPref!!.getBoolean("NightMode", false)
         checkPreferencesForTheme()
-        saveThemeStateToPrefs()
+        handleTopBar()
     }
 
     private fun initializeProgress() {
       //TODO: Collect data and set progress by async task
     }
 
+    private fun handleTopBar() {
+        topbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.set_mode -> {
+                    if(isNightModeOn!!){
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        sharedPrefsEdit!!.putBoolean("NightMode", false)
+                        sharedPrefsEdit!!.apply()
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        sharedPrefsEdit!!.putBoolean("NightMode", true)
+                        sharedPrefsEdit!!.apply()
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
     private fun checkPreferencesForTheme() {
         if(isNightModeOn!!){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 
-    private fun saveThemeStateToPrefs() {
-        val isNightModeOn : Boolean? = appSettingsPref!!.getBoolean("NightMode", false)
-        if (isNightModeOn!!) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main, menu);
-        return true;
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.set_mode) {
-            println("ITT VAGYOK!")
-            if(isNightModeOn!!){
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharedPrefsEdit!!.putBoolean("NightMode", false)
-                sharedPrefsEdit!!.apply()
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                sharedPrefsEdit!!.putBoolean("NightMode", true)
-                sharedPrefsEdit!!.apply()
-            }
-            saveThemeStateToPrefs()
-        }
-        return super.onOptionsItemSelected(item)
+    fun goToRegistration(view: View) {
+        val intent = Intent(this, RegistrationActivity::class.java)
+        startActivity(intent)
     }
 }
