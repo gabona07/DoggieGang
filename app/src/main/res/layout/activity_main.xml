@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkBlue"
+    android:background="@color/background"
     tools:context=".MainActivity">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -20,12 +20,24 @@
         app:layout_constraintBottom_toTopOf="@id/loading_text"/>
 
 
+    <Button
+        android:id="@+id/set_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enable_dark_mode"
+        android:backgroundTint="@color/buttonColor"
+        android:textColor="@color/primaryDark"
+        app:layout_constraintBottom_toTopOf="@+id/loading_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loading_view" />
+
     <TextView
         android:id="@+id/loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/loading"
-        android:textColor="@color/yellow"
+        android:textColor="@color/text"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,6 +52,9 @@
         android:layout_marginEnd="@dimen/progress_margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/progressbar_height"
+        android:indeterminateTint="@color/primaryBackground"
+        android:progressBackgroundTint="@color/primaryDark"
+        android:progressTint="@color/accentEmphasis"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
