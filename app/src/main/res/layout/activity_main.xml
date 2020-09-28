@@ -7,51 +7,49 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/backgroundAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/main"
+        app:title="@string/app_name" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loading_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/loading_text"
+        app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/loading_text"/>
-
-
-    <Button
-        android:id="@+id/set_theme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/enable_dark_mode"
-        android:backgroundTint="@color/buttonColor"
-        android:textColor="@color/primaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/loading_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loading_view" />
+        app:lottie_rawRes="@raw/loading" />
 
     <TextView
         android:id="@+id/loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/loading_text_margin"
         android:text="@string/loading"
         android:textColor="@color/text"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="@dimen/loading_text_margin"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_marginBottom="@dimen/progress_margin"
-        android:layout_marginStart="@dimen/progress_margin"
-        android:layout_marginEnd="@dimen/progress_margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/progressbar_height"
+        android:layout_marginStart="@dimen/progress_margin"
+        android:layout_marginEnd="@dimen/progress_margin"
+        android:layout_marginBottom="@dimen/progress_margin"
         android:indeterminateTint="@color/primaryBackground"
         android:progressBackgroundTint="@color/primaryDark"
         android:progressTint="@color/accentEmphasis"

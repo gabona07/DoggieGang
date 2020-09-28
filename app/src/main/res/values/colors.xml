@@ -9,6 +9,7 @@
     <color name="mainText">#5F6366</color>
     <color name="text">#24305E</color>
     <color name="background">#FFFFFF</color>
+    <color name="backgroundAccent">#B1A2C8</color>
     <color name="buttonColor">#B1A2C8</color>
 
 

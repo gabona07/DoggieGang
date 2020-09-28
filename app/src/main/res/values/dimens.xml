@@ -3,4 +3,5 @@
     <dimen name="progress_margin">10dp</dimen>
     <dimen name="progressbar_height">20dp</dimen>
     <dimen name="loading_text_margin">10dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
 </resources>

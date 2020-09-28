@@ -1,15 +1,23 @@
 package com.codecool.doggiegang
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
+    private var appSettingsPref : SharedPreferences ?= null
+    private var sharedPrefsEdit : SharedPreferences.Editor ?= null
+    private var isNightModeOn : Boolean ?= null
+
+    @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -18,54 +26,59 @@ class MainActivity : AppCompatActivity() {
         // ProgressBar
         initializeProgress()
 
+        // Toolbar
+        setSupportActionBar(toolbar)
+
         // Initialise SharedPrefs for theme
-        val appSettingsPref = getSharedPreferences("AppSettingPrefs", Context.MODE_PRIVATE)
-        val sharedPrefsEdit : SharedPreferences.Editor = appSettingsPref.edit()
-        val isNightModeOn: Boolean = appSettingsPref.getBoolean("NightMode", false)
-        checkPreferencesForTheme(isNightModeOn)
-        setNightModeListener(isNightModeOn, sharedPrefsEdit)
-        saveThemeStateToPrefs(appSettingsPref)
+        appSettingsPref = getSharedPreferences("AppSettingPrefs", Context.MODE_PRIVATE)
+        sharedPrefsEdit  = appSettingsPref!!.edit()
+        isNightModeOn = appSettingsPref!!.getBoolean("NightMode", false)
+        checkPreferencesForTheme()
+        saveThemeStateToPrefs()
     }
 
     private fun initializeProgress() {
       //TODO: Collect data and set progress by async task
     }
 
-    private fun checkPreferencesForTheme(isNightModeOn: Boolean) {
-        if(isNightModeOn){
+    private fun checkPreferencesForTheme() {
+        if(isNightModeOn!!){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            set_theme.text = "Disable Dark Mode"
+
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            set_theme.text = "Enable Dark Mode"
         }
     }
 
-    private fun setNightModeListener(isNightModeOn: Boolean, sharedPrefsEdit: SharedPreferences.Editor) {
-
-        set_theme.setOnClickListener(View.OnClickListener {
-            if(isNightModeOn){
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharedPrefsEdit.putBoolean("NightMode", false)
-                sharedPrefsEdit.apply()
-                set_theme.text = getString(R.string.light_mode)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                sharedPrefsEdit.putBoolean("NightMode", true)
-                sharedPrefsEdit.apply()
-                set_theme.text = getString(R.string.dark_mode)
-            }
-        })
-    }
-
-    private fun saveThemeStateToPrefs(appSettingsPref: SharedPreferences) {
-        val isNightModeOn : Boolean? = appSettingsPref.getBoolean("NightMode", false)
+    private fun saveThemeStateToPrefs() {
+        val isNightModeOn : Boolean? = appSettingsPref!!.getBoolean("NightMode", false)
         if (isNightModeOn!!) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            set_theme.text = getString(R.string.light_mode)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            set_theme.text = getString(R.string.dark_mode)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        if (id == R.id.set_mode) {
+            println("ITT VAGYOK!")
+            if(isNightModeOn!!){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                sharedPrefsEdit!!.putBoolean("NightMode", false)
+                sharedPrefsEdit!!.apply()
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                sharedPrefsEdit!!.putBoolean("NightMode", true)
+                sharedPrefsEdit!!.apply()
+            }
+            saveThemeStateToPrefs()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
