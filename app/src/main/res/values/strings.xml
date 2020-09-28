@@ -4,4 +4,6 @@
     <string name="page_title">DoggieGang</string>
     <string name="options">Options</string>
     <string name="enable_dark_mode">Enable dark mode</string>
+    <string name="dark_mode">Enable Dark Mode</string>
+    <string name="light_mode">Enable light mode</string>
 </resources>

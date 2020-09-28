@@ -15,14 +15,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialise SharedPrefs
+        // ProgressBar
+        initializeProgress()
+
+        // Initialise SharedPrefs for theme
         val appSettingsPref = getSharedPreferences("AppSettingPrefs", Context.MODE_PRIVATE)
         val sharedPrefsEdit : SharedPreferences.Editor = appSettingsPref.edit()
         val isNightModeOn: Boolean = appSettingsPref.getBoolean("NightMode", false)
-        initializeProgress()
+        checkPreferencesForTheme(isNightModeOn)
         setNightModeListener(isNightModeOn, sharedPrefsEdit)
-        saveThemeState(appSettingsPref)
+        saveThemeStateToPrefs(appSettingsPref)
+    }
 
+    private fun initializeProgress() {
+      //TODO: Collect data and set progress by async task
+    }
+
+    private fun checkPreferencesForTheme(isNightModeOn: Boolean) {
         if(isNightModeOn){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             set_theme.text = "Disable Dark Mode"
@@ -32,10 +41,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initializeProgress() {
-      //TODO: Collect data and set progress by async task
-    }
-
     private fun setNightModeListener(isNightModeOn: Boolean, sharedPrefsEdit: SharedPreferences.Editor) {
 
         set_theme.setOnClickListener(View.OnClickListener {
@@ -43,25 +48,24 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 sharedPrefsEdit.putBoolean("NightMode", false)
                 sharedPrefsEdit.apply()
-
-                set_theme.text = "Enable Dark Mode"
+                set_theme.text = getString(R.string.light_mode)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 sharedPrefsEdit.putBoolean("NightMode", true)
                 sharedPrefsEdit.apply()
-                set_theme.text = "Disable Dark Mode"
+                set_theme.text = getString(R.string.dark_mode)
             }
         })
     }
 
-    private fun saveThemeState(appSettingsPref: SharedPreferences) {
+    private fun saveThemeStateToPrefs(appSettingsPref: SharedPreferences) {
         val isNightModeOn : Boolean? = appSettingsPref.getBoolean("NightMode", false)
         if (isNightModeOn!!) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            set_theme.text = "Enable light mode"
+            set_theme.text = getString(R.string.light_mode)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            set_theme.text = "Enable dark mode"
+            set_theme.text = getString(R.string.dark_mode)
         }
     }
 }
