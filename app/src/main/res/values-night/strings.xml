@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DoggieGang</string>
+    <string name="loading">Loading…</string>
+    <string name="page_title">DoggieGang</string>
+    <string name="options">Options</string>
+    <string name="enable_dark_mode">Enable dark mode</string>
+</resources>

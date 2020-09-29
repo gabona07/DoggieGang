@@ -2,14 +2,14 @@
 <resources>
 
     // Colors applied
-    <color name="primaryBackground">#99CED3</color>
+    <color name="primaryBackground">#24305E</color>
     <color name="primaryDark">#314455</color>
-    <color name="accentEmphasis">#EDB5BF</color>
+    <color name="accentEmphasis">#5F6366</color>
 
-    <color name="mainText">#5F6366</color>
-    <color name="text">#24305E</color>
-    <color name="background">#FFFFFF</color>
-    <color name="backgroundAccent">#B1A2C8</color>
+    <color name="mainText">#e7717d</color>
+    <color name="text">#99CED3</color>
+    <color name="background">#19181a</color>
+    <color name="backgroundAccent">#5F6366</color>
     <color name="buttonColor">#B1A2C8</color>
 
 
