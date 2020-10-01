@@ -14,4 +14,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="email">E-mail</string>
+    <string name="register">Register</string>
+    <string name="success">Success</string>
+    <string name="go_to_registration">Go to registration</string>
 </resources>
