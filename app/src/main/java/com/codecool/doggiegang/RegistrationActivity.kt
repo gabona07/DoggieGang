@@ -62,12 +62,10 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.Registrat
     }
 
     fun validateInputs(view: View) {
-        successText.visibility = View.VISIBLE
-        validator.validateInputs(usernameField, emailField, passwordField, successText)
+        validator.validateInputs(usernameField, emailField, passwordField, dogNameField, introductionField, locationField, successText)
     }
 
     override fun onError(field: TextInputLayout, message: String) {
         field.error = message
     }
-
 }

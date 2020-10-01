@@ -1,19 +1,15 @@
 package com.codecool.doggiegang
 
-import android.view.View
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.filters.LargeTest
 import androidx.test.runner.AndroidJUnit4
-import com.google.android.material.textfield.TextInputLayout
-import org.hamcrest.Description
-import org.hamcrest.Matcher
-import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,30 +45,17 @@ class RegistrationUiTest {
     fun mainActivityFailTest() {
         onView(withId(R.id.email)).perform(scrollTo())
         onView(withId(R.id.email)).perform(ViewActions.typeText("Mikey Mc'Daniels"))
-        onView(withId(R.id.username)).perform(scrollTo())
-        onView(withId(R.id.username)).perform(ViewActions.typeText("mikey@mikey.com"))
         onView(withId(R.id.password)).perform(scrollTo())
         onView(withId(R.id.password)).perform(ViewActions.typeText("abc"))
+        closeSoftKeyboard()
         onView(withId(R.id.registerButton)).perform(scrollTo())
-        onView(withId(R.id.registerButton)).perform(ViewActions.click())
-        onView(withId(R.id.username)).check(matches(hasTextInputLayoutErrorText("Invalid name format!")))
-        onView(withId(R.id.emailField)).check(matches(hasTextInputLayoutErrorText("Wrong e-mail format!")))
-        onView(withId(R.id.passwordField)).check(matches(hasTextInputLayoutErrorText("Password too weak, it must contain one lowercase, one uppercase, one digit and one special character.")))
+        onView(withId(R.id.registerButton)).perform(click())
+        onView(withId(R.id.usernameField)).check(matches(hasDescendant(withText("Field can't be empty!"))))
+        onView(withId(R.id.emailField)).check(matches(hasDescendant(withText("Invalid email format!"))))
+        onView(withId(R.id.passwordField)).check(matches(hasDescendant(withText("Password is too weak!"))))
+        onView(withId(R.id.dogNameField)).check(matches(hasDescendant(withText("Field can't be empty!"))))
+        onView(withId(R.id.introductionField)).check(matches(hasDescendant(withText("Field can't be empty!"))))
+        onView(withId(R.id.locationField)).check(matches(hasDescendant(withText("Field can't be empty!"))))
+
     }
-
-    private fun hasTextInputLayoutErrorText(expectedErrorText: String): Matcher<View>? {
-        return object : TypeSafeMatcher<View>() {
-            override fun matchesSafely(view: View): Boolean {
-                if (view !is TextInputLayout) {
-                    return false
-                }
-                val error = (view).error ?: return false
-                val hint = error.toString()
-                return expectedErrorText == hint
-            }
-
-            override fun describeTo(description: Description) {}
-        }
-    }
-
 }

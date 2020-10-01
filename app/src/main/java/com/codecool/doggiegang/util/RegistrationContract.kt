@@ -10,7 +10,7 @@ interface RegistrationContract {
     }
 
     interface RegistrationValidation {
-        fun validateInputs(name: TextInputLayout, email: TextInputLayout, password: TextInputLayout, success: TextView)
+        fun validateInputs(usernameField : TextInputLayout, emailField  : TextInputLayout, passwordField : TextInputLayout, dogNameField  : TextInputLayout, introductionField  : TextInputLayout, locationField  : TextInputLayout, successText : TextView)
         fun onAttach(view: RegistrationView)
         fun onDetach()
     }

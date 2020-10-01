@@ -20,29 +20,19 @@ class Validation : RegistrationContract.RegistrationValidation{
                 "(?=\\S+$)" +           //no white spaces
                 ".{4,}" +               //at least 4 characters
                 "$")
-
-        private val NAME_PATTERN = Pattern.compile("^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)")
     }
 
-    override fun validateInputs(name: TextInputLayout, email: TextInputLayout, password: TextInputLayout, success: TextView) {
-        validateName(name)
-        validateEmail(email)
-        validatePassword(password)
-        if (validateName(name) && validateEmail(email) && validatePassword(password)) {
-            success.visibility = View.VISIBLE
+    override fun validateInputs(usernameField : TextInputLayout, emailField  : TextInputLayout, passwordField : TextInputLayout, dogNameField  : TextInputLayout, introductionField  : TextInputLayout, locationField  : TextInputLayout, successText : TextView) {
+        validateIfEmpty(usernameField)
+        validateEmail(emailField)
+        validatePassword(passwordField)
+        validateIfEmpty(dogNameField)
+        validateIfEmpty(introductionField)
+        validateIfEmpty(locationField)
+        if (validateIfEmpty(usernameField) && validateEmail(emailField) && validatePassword(passwordField) &&
+            validateIfEmpty(dogNameField) && validateIfEmpty(introductionField) && validateIfEmpty(locationField)) {
+            successText.visibility = View.VISIBLE
         }
-    }
-
-    private fun validateName(nameField: TextInputLayout): Boolean {
-        val name = nameField.editText?.text.toString().trim()
-        if (name.isEmpty()) {
-            view?.onError(nameField,"Field can't be empty!")
-            return false
-        } else if (!NAME_PATTERN.matcher(name).matches()) {
-            view?.onError(nameField,"Invalid name format!")
-            return false
-        }
-        return true
     }
 
     private fun validateEmail(emailField: TextInputLayout): Boolean {
@@ -51,7 +41,7 @@ class Validation : RegistrationContract.RegistrationValidation{
             view?.onError(emailField,"Field can't be empty!")
             return false
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            view?.onError(emailField,"Wrong e-mail format!")
+            view?.onError(emailField,"Invalid email format!")
             return false
         }
         return true
@@ -63,7 +53,16 @@ class Validation : RegistrationContract.RegistrationValidation{
             view?.onError(passwordField,"Field can't be empty!")
             return false
         } else if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            view?.onError(passwordField, "Password too weak, it must contain one lowercase, one uppercase, one digit and one special character.")
+            view?.onError(passwordField, "Password is too weak!")
+            return false
+        }
+        return true
+    }
+
+    private fun validateIfEmpty(field : TextInputLayout): Boolean {
+        val text = field.editText?.text.toString().trim()
+        if (text.isEmpty()) {
+            view?.onError(field,"Field can't be empty!")
             return false
         }
         return true
